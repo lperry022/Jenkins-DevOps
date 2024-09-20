@@ -7,8 +7,9 @@ pipeline {
     stages{
         stage('Build'){
             steps {
-                echo "Building the website..."
-                sh 'echo "Build step completed."'
+                echo "Copying index.html to the build directory."
+                sh 'mkdir -p build'
+                sh 'cp public_html/index.html build/'
             }
         }
         stage('Test'){
