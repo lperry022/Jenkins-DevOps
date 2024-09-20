@@ -1,0 +1,53 @@
+pipeline {
+    agent any
+    environment {
+        DIRECTORY_PATH = '/var/jenkins_home'
+        RECIPIENT_EMAIL = 'lianaperry022@gmail.com'
+    }
+    stages{
+        stage('Build'){
+            steps {
+                echo "Building the website..."
+                sh 'echo "Build step completed."'
+            }
+        }
+        stage('Test'){
+            steps {
+                echo "Testing the website..."
+                sh 'echo "Test step completed."'
+            }
+        }
+        stage('Code Quality Analysis'){
+            steps {
+                echo "Analysing the code quality..."
+                sh 'echo "Code analysis completed."'
+            }
+        }
+        stage('Deploy to Staging'){
+            steps {
+                echo "Deploying the website to the staging environment..."
+                sh 'echo "Demployment staging completed."'
+            }
+        }
+        stage('Release to production'){
+            steps {
+                echo "Releasing the website to production..."
+                sh 'echo "Release to production completed."'
+            }
+        }
+        stage('Monitoring and Alerting'){
+            steps {
+                echo "Setting up monitoring and alerting..."
+                sh 'echo "Monitoring setup completed."'
+            }
+        }
+    }
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed'
+        }
+    }
+}
