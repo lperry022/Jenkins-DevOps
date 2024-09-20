@@ -9,7 +9,7 @@ pipeline {
             steps {
                 echo "Copying index.html to the build directory."
                 sh 'mkdir -p build'
-                sh 'cp public_html/index.html build/'
+                sh 'cp website/public_html/index.html build/'
             }
         }
         stage('Test'){
