@@ -1,4 +1,5 @@
-import { defineConfig } from 'eslint';
+import eslint from 'eslint';
+const { defineConfig } = eslint;
 
 export default defineConfig({
     languageOptions: {
@@ -6,13 +7,10 @@ export default defineConfig({
             describe: true,
             test: true,
             expect: true,
-            // Add other globals as needed
         },
     },
     rules: {
-        // Example rules
         'no-undef': 'error',
         'import/no-unresolved': 'error',
-        // Add more rules as needed
     },
 });
