@@ -8,17 +8,16 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 echo "Installing dependencies..."
-                sh 'npm install'
+                sh '/opt/homebrew/bin/npm install'
             }
         }
         stage('Build') {
-    steps {
-        echo "Building the website..."
-        sh 'cd website && /opt/homebrew/bin/npm install'  
-        sh 'cd website && /opt/homebrew/bin/npm start'  
-    }
-}
-
+            steps {
+                echo "Building the website..."
+                sh 'cd website && /opt/homebrew/bin/npm install'  
+                sh 'cd website && /opt/homebrew/bin/npm start'  
+            }
+        }
         stage('Test') {
             steps {
                 echo "Testing the website..."
