@@ -8,9 +8,10 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo "Building the website (e.g., for a React or Node.js app)..."
-                sh '/opt/homebrew/bin/npm install' 
-                sh '/opt/homebrew/bin/npm run build' 
+                 echo "Building the website (e.g., for a React or Node.js app)..."
+        sh 'cd website && /opt/homebrew/bin/npm install'  
+        sh 'cd website && /opt/homebrew/bin/npm run build' 
+        sh 'tar -czvf build/artifact.tar.gz -C build .'
                 sh 'tar -czvf build/artifact.tar.gz -C build .' 
             }
         }
