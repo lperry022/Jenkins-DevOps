@@ -30,7 +30,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo "Running a smoke test..."
-                sh 'cd website && npm test -- test/smoke.test.js'
+                sh 'cd website && npm test -- __tests__/smoke.test.js'
 
             }
         }
