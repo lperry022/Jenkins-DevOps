@@ -29,7 +29,9 @@ pipeline {
         }
         stage('Test') {
             steps {
-                echo "Testing the website..."
+                echo "Running a smoke test..."
+                sh 'cd website && npm test -- test/smoke.test.js'
+
             }
         }
         stage('Code Quality Analysis') {
