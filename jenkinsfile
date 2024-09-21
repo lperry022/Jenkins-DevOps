@@ -37,15 +37,15 @@ pipeline {
 
             }
         }
-        stage('Code Quality Analysis') {
-            steps {
-                echo "Analyzing the code quality..."
-                sh '''
-                cd website
-                npx eslint .
-                '''     
-        }
-        }
+       stage('Code Quality Analysis') {
+    steps {
+        echo "Analyzing the code quality..."
+        sh '''
+            cd website
+            npx eslint --config eslint.config.mjs .
+        '''     
+    }
+}
         stage('Deploy to Staging') {
             steps {
                 echo "Deploying the website to the staging environment..."
