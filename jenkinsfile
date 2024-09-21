@@ -40,8 +40,10 @@ pipeline {
         stage('Code Quality Analysis') {
             steps {
                 echo "Analyzing the code quality..."
-                sh '/opt/homebrew/lib/ruby/gems/3.3.0/bin/codeclimate analyze --dev --repo-token=7b8de5407bccef036816363338fdbdf950a59780'
-            }
+                sh '''
+            /opt/homebrew/lib/ruby/gems/3.3.0/bin/codeclimate analyze --dev --repo-token=7b8de5407bccef036816363338fdbdf950a59780 --no-docker
+        '''            
+        }
         }
         stage('Deploy to Staging') {
             steps {
