@@ -3,42 +3,40 @@ pipeline {
     environment {
         DIRECTORY_PATH = '/var/jenkins_home'
         RECIPIENT_EMAIL = 'lianaperry022@gmail.com'
-        PATH = "/path/to/node:/opt/homebrew/bin/node"
+        SHELL = '/bin/bash'
     }
-    stages{
-        stage('Build'){
+    stages {
+        stage('Build') {
             steps {
                 echo "Copying index.html to the build directory."
-                sh 'mkdir -p build'
-                sh 'cp website/public_html/index.html build/'
+                sh '/bin/bash -c "mkdir -p build && cp website/public_html/index.html build/"'
             }
         }
-        stage('Test'){
+        stage('Test') {
             steps {
                 echo "Testing the website..."
-                sh 'node -v' 
-                sh 'node test_index.js'
+                sh '/bin/bash -c "node -v && node test_index.js"'
             }
         }
-        stage('Code Quality Analysis'){
+        stage('Code Quality Analysis') {
             steps {
-                echo "Analysing the code quality..."
+                echo "Analyzing the code quality..."
                 sh 'echo "Code analysis completed."'
             }
         }
-        stage('Deploy to Staging'){
+        stage('Deploy to Staging') {
             steps {
                 echo "Deploying the website to the staging environment..."
-                sh 'echo "Demployment staging completed."'
+                sh 'echo "Deployment to staging completed."'
             }
         }
-        stage('Release to production'){
+        stage('Release to production') {
             steps {
                 echo "Releasing the website to production..."
                 sh 'echo "Release to production completed."'
             }
         }
-        stage('Monitoring and Alerting'){
+        stage('Monitoring and Alerting') {
             steps {
                 echo "Setting up monitoring and alerting..."
                 sh 'echo "Monitoring setup completed."'
