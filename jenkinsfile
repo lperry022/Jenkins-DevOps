@@ -3,6 +3,7 @@ pipeline {
     environment {
         DIRECTORY_PATH = '/var/jenkins_home'
         RECIPIENT_EMAIL = 'lianaperry022@gmail.com'
+        NODE_PATH = '/opt/homebrew/bin/node'
     }
     stages {
         stage('Install Dependencies') {
