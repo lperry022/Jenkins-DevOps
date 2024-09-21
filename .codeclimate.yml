@@ -1,4 +1,6 @@
-version: '2'
-checks:
-  complexity:
+version: "2"
+engines:
+  eslint:
+    enabled: true
+  rubocop:
     enabled: true
