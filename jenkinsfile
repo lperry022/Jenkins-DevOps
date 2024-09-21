@@ -40,8 +40,11 @@ pipeline {
         stage('Code Quality Analysis') {
             steps {
                 echo "Analyzing the code quality..."
-                sh 'echo "Code analysis completed."'
-            }
+                 sh '''
+                docker run --env CODECLIMATE_REPO_TOKEN=7b8de5407bccef036816363338fdbdf950a59780 \
+                --volume "$(pwd):/code" \
+                codeclimate/codeclimate
+                    '''            }
         }
         stage('Deploy to Staging') {
             steps {
