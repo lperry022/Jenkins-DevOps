@@ -6,11 +6,14 @@ pipeline {
     }
     stages {
         stage('Build') {
-            steps {
-                echo "Copying index.html to the build directory."
-sh 'cp website/public_html/index.html build/'
-            }
+    steps {
+        echo "Building the website (e.g., for a React or Node.js app)..."
+        sh 'npm install'  
+        sh 'npm run build' 
+        sh 'tar -czvf build/artifact.tar.gz -C build .' 
+     }
         }
+
         stage('Test') {
             steps {
                 echo "Testing the website..."
