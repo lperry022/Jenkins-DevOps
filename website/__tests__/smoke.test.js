@@ -1,17 +1,14 @@
-const fetch = require('node-fetch'); 
+import fetch from 'node-fetch'; 
 
 describe('Smoke Tests', () => {
-    const baseUrl = 'http://localhost:3000';
-
-    test('Server is running', async () => {
-        const response = await fetch(baseUrl);
-        expect(response.status).toBe(200); 
+    it('Server is running', async () => {
+        const response = await fetch('http://localhost:3000/');
+        expect(response.ok).toBe(true);
     });
 
-    test('API endpoint /api/data responds', async () => {
-        const response = await fetch(`${baseUrl}/api/data`);
-        expect(response.status).toBe(200);
+    it('API endpoint /api/data responds', async () => {
+        const response = await fetch('http://localhost:3000/api/data');
         const data = await response.json();
-        expect(data).toBeDefined(); 
+        expect(data).toEqual({ message: 'Hello, world!' });
     });
 });
