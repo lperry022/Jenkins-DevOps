@@ -1,5 +1,5 @@
-import eslint from 'eslint';
-const { defineConfig } = eslint;
+import pkg from 'eslint';
+const { defineConfig } = pkg;
 
 export default defineConfig({
     languageOptions: {
