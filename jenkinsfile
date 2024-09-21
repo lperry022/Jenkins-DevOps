@@ -3,7 +3,7 @@ pipeline {
     environment {
         DIRECTORY_PATH = '/var/jenkins_home'
         RECIPIENT_EMAIL = 'lianaperry022@gmail.com'
-        SHELL = '/bin/bash'
+        PATH = "/path/to/node:/opt/homebrew/bin/node:/usr/local/bin/node"  
     }
     stages {
         stage('Build') {
@@ -15,7 +15,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo "Testing the website..."
-                sh '/bin/bash -c "node -v && node test_index.js"'
+                sh '/bin/bash -c "/usr/local/bin/node -v && /usr/local/bin/node test_index.js"'  
             }
         }
         stage('Code Quality Analysis') {
