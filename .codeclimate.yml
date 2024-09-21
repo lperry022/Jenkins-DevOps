@@ -4,3 +4,5 @@ engines:
     enabled: true
   rubocop:
     enabled: true
+docker:
+  disabled: true
