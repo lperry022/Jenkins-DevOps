@@ -11,12 +11,14 @@ pipeline {
                 sh 'npm install'
             }
         }
-        stage('Start Server') {
-            steps {
-                echo "Starting the web server..."
-                sh 'npm start' 
-            }
-        }
+        stage('Build') {
+    steps {
+        echo "Building the website..."
+        sh 'cd website && /opt/homebrew/bin/npm install'  
+        sh 'cd website && /opt/homebrew/bin/npm start'  
+    }
+}
+
         stage('Test') {
             steps {
                 echo "Testing the website..."
