@@ -32,7 +32,7 @@ pipeline {
                 echo "Running a smoke test..."
                 sh '''
                 cd website
-                npm test -- tests/smoke.test.js
+                npm test -- __tests__/smoke.test.js
                 '''
 
             }
