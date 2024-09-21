@@ -3,13 +3,12 @@ pipeline {
     environment {
         DIRECTORY_PATH = '/var/jenkins_home'
         RECIPIENT_EMAIL = 'lianaperry022@gmail.com'
-        PATH = "/path/to/node:/opt/homebrew/bin/node:/usr/local/bin/node"  
     }
     stages {
         stage('Build') {
             steps {
                 echo "Copying index.html to the build directory."
-                sh '/bin/bash -c "mkdir -p build && cp website/public_html/index.html build/"'
+sh 'cp website/public_html/index.html build/'
             }
         }
         stage('Test') {
