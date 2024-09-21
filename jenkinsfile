@@ -6,20 +6,24 @@ pipeline {
     environment {
         DIRECTORY_PATH = '/var/jenkins_home'
         RECIPIENT_EMAIL = 'lianaperry022@gmail.com'
-        NODE_PATH = '/opt/homebrew/bin/node'
     }
     stages {
         stage('Install Dependencies') {
             steps {
                 echo "Installing dependencies..."
-                sh '/opt/homebrew/bin/npm install'
+                sh '''
+                    cd website
+                    npm install
+                '''
             }
         }
         stage('Build') {
             steps {
                 echo "Building the website..."
-                sh 'cd website && /opt/homebrew/bin/npm install'  
-                sh 'cd website && /opt/homebrew/bin/npm start'  
+                sh '''
+                    cd website
+                    npm start
+                '''
             }
         }
         stage('Test') {
