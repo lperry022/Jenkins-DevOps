@@ -13,7 +13,7 @@ pipeline {
                 echo "Installing dependencies..."
                 sh '''
                     cd website
-                    npm install
+            npm install --legacy-peer-deps
                 '''
             }
         }
