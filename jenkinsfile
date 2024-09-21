@@ -3,7 +3,7 @@ pipeline {
     environment {
         DIRECTORY_PATH = '/var/jenkins_home'
         RECIPIENT_EMAIL = 'lianaperry022@gmail.com'
-        PATH = "/path/to/node:$/opt/homebrew/bin/node"
+        PATH = "/path/to/node:/opt/homebrew/bin/node"
     }
     stages{
         stage('Build'){
