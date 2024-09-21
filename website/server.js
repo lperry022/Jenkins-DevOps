@@ -1,23 +1,12 @@
-const express = require('express');
-const path = require('path');
+import express from 'express';
+
 const app = express();
-const port = 3000;
-
-app.use(express.static(path.join(__dirname, 'public_html')));
-
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public_html', 'index.html'));
-});
+const PORT = 3000;
 
 app.get('/api/data', (req, res) => {
-    const sampleData = {
-        id: 1,
-        name: 'Sample Data',
-        description: 'This is some sample data from the API.'
-    };
-    res.json(sampleData);
+    res.json({ message: 'Hello, world!' });
 });
 
-app.listen(port, () => {
-    console.log(`Web server running at: http://localhost:${port}`);
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
