@@ -13,7 +13,7 @@ pipeline {
                 echo "Installing dependencies..."
                 sh '''
                     cd website
-            npm install --legacy-peer-deps
+                    npm install --legacy-peer-deps
                 '''
             }
         }
@@ -34,18 +34,17 @@ pipeline {
                 cd website
                 npm test -- __tests__/smoke.test.js
                 '''
-
             }
         }
-       stage('Code Quality Analysis') {
-    steps {
-        echo "Analyzing the code quality..."
-        sh '''
-            cd website
-            npx eslint --config eslint.config.mjs .
-        '''     
-    }
-}
+        stage('Code Quality Analysis') {
+            steps {
+                echo "Analyzing the code quality..."
+                sh '''
+                    cd website
+                    npx eslint --config eslint.config.js .
+                '''     
+            }
+        }
         stage('Deploy to Staging') {
             steps {
                 echo "Deploying the website to the staging environment..."
@@ -65,18 +64,18 @@ pipeline {
             }
         }
     }
-   post {
-    always {
-        echo 'Cleaning up...'
-        sh '''
-            pkill -f "node ./website" || true
-        '''
+    post {
+        always {
+            echo 'Cleaning up...'
+            sh '''
+                pkill -f "node ./website" || true
+            '''
+        }
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed'
+        }
     }
-    success {
-        echo 'Pipeline completed successfully!'
-    }
-    failure {
-        echo 'Pipeline failed'
-    }
-}
 }
