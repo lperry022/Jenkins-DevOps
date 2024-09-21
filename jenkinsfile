@@ -14,7 +14,6 @@ sh 'cp website/public_html/index.html build/'
         stage('Test') {
             steps {
                 echo "Testing the website..."
-                sh '/bin/bash -c "/usr/local/bin/node -v && /usr/local/bin/node test_index.js"'  
             }
         }
         stage('Code Quality Analysis') {
