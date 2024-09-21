@@ -57,12 +57,18 @@ pipeline {
             }
         }
     }
-    post {
-        success {
-            echo 'Pipeline completed successfully!'
-        }
-        failure {
-            echo 'Pipeline failed'
-        }
+   post {
+    always {
+        echo 'Cleaning up...'
+        sh '''
+            pkill -f "node ./website" || true
+        '''
     }
+    success {
+        echo 'Pipeline completed successfully!'
+    }
+    failure {
+        echo 'Pipeline failed'
+    }
+}
 }
