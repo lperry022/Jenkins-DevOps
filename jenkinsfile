@@ -3,17 +3,17 @@ pipeline {
     environment {
         DIRECTORY_PATH = '/var/jenkins_home'
         RECIPIENT_EMAIL = 'lianaperry022@gmail.com'
+        PATH = "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"  
     }
     stages {
         stage('Build') {
-    steps {
-        echo "Building the website (e.g., for a React or Node.js app)..."
-        sh 'npm install'  
-        sh 'npm run build' 
-        sh 'tar -czvf build/artifact.tar.gz -C build .' 
-     }
+            steps {
+                echo "Building the website (e.g., for a React or Node.js app)..."
+                sh '/opt/homebrew/bin/npm install' 
+                sh '/opt/homebrew/bin/npm run build' 
+                sh 'tar -czvf build/artifact.tar.gz -C build .' 
+            }
         }
-
         stage('Test') {
             steps {
                 echo "Testing the website..."
