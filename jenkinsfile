@@ -45,9 +45,13 @@ pipeline {
         stage('Deploy to Staging') {
             steps {
                 echo "Deploying the website to the staging environment..."
-                sh 'echo "Deployment to staging completed."'
-            }
-        }
+                sh '''
+                    cd website
+                    docker-compose up -d --build
+                '''
+    }
+}
+
         stage('Release to production') {
             steps {
                 echo "Releasing the website to production..."
