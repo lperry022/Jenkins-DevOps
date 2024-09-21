@@ -15,7 +15,7 @@ pipeline {
         stage('Test'){
             steps {
                 echo "Testing the website..."
-                sh 'echo "Test step completed."'
+                sh 'node test_index.js'
             }
         }
         stage('Code Quality Analysis'){
