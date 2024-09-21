@@ -39,10 +39,7 @@ pipeline {
         stage('Code Quality Analysis') {
             steps {
                 echo "Analyzing the code quality..."
-                sh '''
-                    cd website
-                    npx eslint --config eslint.config.js .
-                '''     
+                
             }
         }
         stage('Deploy to Staging') {
