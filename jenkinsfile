@@ -6,6 +6,7 @@ pipeline {
     environment {
         DIRECTORY_PATH = '/var/jenkins_home'
         RECIPIENT_EMAIL = 'lianaperry022@gmail.com'
+        CODECLIMATE_API_TOKEN = credentials('CODECLIMATE_API_TOKEN')
     }
     stages {
         stage('Install Dependencies') {
@@ -31,15 +32,21 @@ pipeline {
             steps {
                 echo "Running a smoke test..."
                 sh '''
-                cd website
-                npm test -- __tests__/smoke.test.js
+                    cd website
+                    npm test -- __tests__/smoke.test.js
                 '''
             }
         }
         stage('Code Quality Analysis') {
             steps {
                 echo "Analyzing the code quality..."
-                
+                sh '''
+                    cd website
+                    docker run --rm \
+                    -v "$(pwd)":/code \
+                    -e CODECLIMATE_CODE="$CODECLIMATE_API_TOKEN" \
+                    codeclimate/codeclimate analyze
+                '''
             }
         }
         stage('Deploy to Staging') {
@@ -49,9 +56,8 @@ pipeline {
                     cd website
                     docker-compose up -d --build
                 '''
-           }
+            }
         }
-
         stage('Release to Production') {
             steps {
                 echo "Merging changes to production branch..."
@@ -64,7 +70,6 @@ pipeline {
                 sh 'echo "Release to production completed."'
             }
         }
-
         stage('Monitoring and Alerting') {
             steps {
                 echo "Setting up monitoring and alerting..."
