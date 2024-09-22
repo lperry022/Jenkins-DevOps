@@ -80,18 +80,21 @@ pipeline {
             }
         }
     }
-    post {
-        always {
-            echo 'Cleaning up...'
-            sh '''
-                pkill -f "node ./website" || true
-            '''
+post {
+    always {
+        script {
+            node {
+                echo 'Cleaning up...'
+                sh '''
+                    pkill -f "node ./website" || true
+                '''
+            }
         }
-        success {
-            echo 'Pipeline completed successfully!'
-        }
-        failure {
-            echo 'Pipeline failed'
-        }
+    }
+    success {
+        echo 'Pipeline completed successfully!'
+    }
+    failure {
+        echo 'Pipeline failed'
     }
 }
