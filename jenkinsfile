@@ -63,14 +63,16 @@ pipeline {
         echo "Merging changes to production branch..."
         sh '''
             git checkout production
-            git pull origin production --rebase  
-            git merge main                      
-            git push origin production          
+            git fetch origin
+            git pull origin production --rebase
+            git merge main
+            git push origin production
         '''
         echo "Releasing the website to production..."
         sh 'echo "Release to production completed."'
     }
 }
+
 
 
         stage('Monitoring and Alerting') {
