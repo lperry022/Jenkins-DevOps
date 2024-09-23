@@ -49,14 +49,16 @@ pipeline {
             }
         }
         stage('Release to Production') {
-            steps {
-                echo "Releasing the application to production..."
-                sh '''
-                    cd website
-                    bundle exec cap production deploy
-                '''
-            }
-        }
+    steps {
+        echo "Releasing the application to production..."
+        sh '''
+            cd website
+            gem install bundler:2.5.19 || true
+            bundle exec cap production deploy
+        '''
+    }
+}
+
         stage('Monitoring and Alerting') {
             steps {
                 echo "Setting up monitoring and alerting..."
