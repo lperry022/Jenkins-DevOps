@@ -34,7 +34,7 @@ pipeline {
                     cd website
                     docker run --rm \
                     -v "$(pwd)":/code \
-                    -e CODECLIMATE_CODE="$CODECLIMATE_API_TOKEN" \
+                    -e CODECLIMATE_CODE="21017bb55991bbd195883c51a17f51c950d4f970" \
                     codeclimate/codeclimate analyze
                 '''
             }
