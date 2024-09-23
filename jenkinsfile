@@ -49,22 +49,10 @@ pipeline {
             }
         }
        stage('Release to Production') {
-    steps {
+        steps {
         echo "Releasing the application to production..."
-        sh '''
-            export PATH="$HOME/.rbenv/bin:$PATH"
-            eval "$(rbenv init -)"
-            cd website
+        sh 'cd website && docker-compose up -d --build'
 
-            gem install bundler --user-install
-
-            export GEM_HOME="$HOME/.gem/ruby/2.6.0"
-            export PATH="$GEM_HOME/bin:$PATH"
-
-            bundle exec cap production deploy:starting
-            bundle exec cap production deploy
-            bundle exec cap production deploy:finished
-        '''
     }
 }
 
