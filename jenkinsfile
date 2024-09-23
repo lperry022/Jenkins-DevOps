@@ -6,35 +6,25 @@ pipeline {
     environment {
         DIRECTORY_PATH = '/var/jenkins_home'
         RECIPIENT_EMAIL = 'lianaperry022@gmail.com'
-        CODECLIMATE_API_TOKEN = credentials('CODECLIMATE_API_TOKEN')
+        CODECLIMATE_API_TOKEN = credentials('CODECLIMATE_API_TOKEN') // Ensure this is correct
     }
     stages {
         stage('Install Dependencies') {
             steps {
                 echo "Installing dependencies..."
-                sh '''
-                    cd website
-                    npm install --legacy-peer-deps
-                '''
+                sh 'cd website && npm install --legacy-peer-deps'
             }
         }
         stage('Build') {
             steps {
                 echo "Building the website..."
-                sh '''
-                    cd website
-                    npm start &
-                    sleep 5 
-                '''
+                sh 'cd website && npm start & sleep 5'
             }
         }
         stage('Test') {
             steps {
                 echo "Running a smoke test..."
-                sh '''
-                    cd website
-                    npm test -- __tests__/smoke.test.js
-                '''
+                sh 'cd website && npm test -- __tests__/smoke.test.js'
             }
         }
         stage('Code Quality Analysis') {
@@ -52,10 +42,7 @@ pipeline {
         stage('Deploy to Staging') {
             steps {
                 echo "Deploying the website to the staging environment..."
-                sh '''
-                    cd website
-                    docker-compose up -d --build
-                '''
+                sh 'cd website && docker-compose up -d --build'
             }
         }
         stage('Release to Production') {
@@ -77,22 +64,18 @@ pipeline {
             }
         }
     }
-post {
-    always {
-        script {
-            node {
+    post {
+        always {
+            script {
                 echo 'Cleaning up...'
-                sh '''
-                    pkill -f "node ./website" || true
-                '''
+                sh 'pkill -f "node ./website" || true'
             }
         }
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed'
+        }
     }
-    success {
-        echo 'Pipeline completed successfully!'
-    }
-    failure {
-        echo 'Pipeline failed'
-    }
-}
 }
