@@ -53,7 +53,6 @@ pipeline {
                 echo "Releasing the application to production..."
                 sh '''
                     cd website
-                    gem install bundler:2.5.19 --user-install || true
                     bundle exec cap production deploy:starting
                     bundle exec cap production deploy
                     bundle exec cap production deploy:finished
