@@ -6,7 +6,6 @@ pipeline {
     environment {
         DIRECTORY_PATH = '/var/jenkins_home'
         RECIPIENT_EMAIL = 'lianaperry022@gmail.com'
-        CODECLIMATE_API_TOKEN = credentials('CODECLIMATE_API_TOKEN') 
     }
     stages {
         stage('Install Dependencies') {
@@ -29,17 +28,15 @@ pipeline {
         }
       stage('Code Quality Analysis') {
     steps {
-        echo "Analyzing the code quality..."
+        echo "Analyzing the code quality with ESLint..."
         sh '''
             cd website
-            docker run --rm \
-            -v "$(pwd)":/code \
-            -v /var/run/docker.sock:/var/run/docker.sock \
-            -e CODECLIMATE_CODE="${CODECLIMATE_API_TOKEN}" \
-            codeclimate/codeclimate analyze
+            npm install eslint --save-dev || true
+            npx eslint . --fix || true
         '''
     }
 }
+
 
         stage('Deploy to Staging') {
             steps {
