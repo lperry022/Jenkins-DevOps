@@ -32,17 +32,16 @@ pipeline {
                 sh 'cd website && npm test -- __tests__/smoke.test.js'
             }
         }
-      stage('Code Quality Analysis') {
-    steps {
-        echo "Analyzing the code quality with ESLint..."
-        sh '''
-            cd website
-            npm install eslint --save-dev || true
-            npx eslint . --fix || true
-        '''
-    }
-}
-
+        stage('Code Quality Analysis') {
+            steps {
+                echo "Analyzing the code quality with ESLint..."
+                sh '''
+                    cd website
+                    npm install eslint --save-dev || true
+                    npx eslint . --fix || true
+                '''
+            }
+        }
         stage('Deploy to Staging') {
             steps {
                 echo "Deploying the website to the staging environment..."
@@ -50,12 +49,14 @@ pipeline {
             }
         }
         stage('Release to Production') {
-    steps {
-        echo "Deploying to production using Docker..."
-        sh 'cd website && docker-compose up -d --build'
-    }
-}
-
+            steps {
+                echo "Releasing the application to production..."
+                sh '''
+                    cd website
+                    bundle exec cap production deploy
+                '''
+            }
+        }
         stage('Monitoring and Alerting') {
             steps {
                 echo "Setting up monitoring and alerting..."
