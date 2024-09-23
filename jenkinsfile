@@ -53,13 +53,6 @@ pipeline {
         stage('Release to Production') {
             steps {
                 echo "Merging changes to production branch..."
-                sh '''
-                    git checkout production
-                    git merge main
-                    git push origin production
-                '''
-                echo "Releasing the website to production..."
-                sh 'echo "Release to production completed."'
             }
         }
         stage('Monitoring and Alerting') {
