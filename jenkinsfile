@@ -55,13 +55,19 @@ pipeline {
             export PATH="$HOME/.rbenv/bin:$PATH"
             eval "$(rbenv init -)"
             cd website
-            gem install bundler
+
+            gem install bundler --user-install
+
+            export GEM_HOME="$HOME/.gem/ruby/2.6.0"
+            export PATH="$GEM_HOME/bin:$PATH"
+
             bundle exec cap production deploy:starting
             bundle exec cap production deploy
             bundle exec cap production deploy:finished
         '''
     }
 }
+
         stage('Monitoring and Alerting') {
             steps {
                 echo "Setting up monitoring and alerting..."
