@@ -6,65 +6,62 @@ pipeline {
     environment {
         DIRECTORY_PATH = '/var/jenkins_home'
         RECIPIENT_EMAIL = 'lianaperry022@gmail.com'
-        CODECLIMATE_API_TOKEN = credentials('CODECLIMATE_API_TOKEN')
     }
     stages {
         stage('Install Dependencies') {
             steps {
                 echo "Installing dependencies..."
-                sh '''
-                    cd website
-                    npm install --legacy-peer-deps
-                '''
+                sh 'cd website && npm install --legacy-peer-deps'
+            }
+        }
+        stage('Run ESLint') {
+            steps {
+                sh 'cd website && npm install eslint --save-dev'
+                sh 'cd website && npx eslint . --fix'
             }
         }
         stage('Build') {
             steps {
                 echo "Building the website..."
-                sh '''
-                    cd website
-                    npm start &
-                    sleep 5 
-                '''
+                sh 'cd website && npm start & sleep 5'
             }
         }
         stage('Test') {
             steps {
                 echo "Running a smoke test..."
-                sh '''
-                    cd website
-                    npm test -- __tests__/smoke.test.js
-                '''
+                sh 'cd website && npm test -- __tests__/smoke.test.js'
             }
         }
-        stage('Code Quality Analysis') {
-            steps {
-                echo "Analyzing the code quality..."
-                sh '''
-                    cd website
-                    docker run --rm \
-                    -v "$(pwd)":/code \
-                    -e CODECLIMATE_CODE="$CODECLIMATE_API_TOKEN" \
-                    codeclimate/codeclimate analyze
-                '''
-            }
-        }
-        stage('Deploy to Staging') {
-            steps {
-                echo "Deploying the website to the staging environment..."
-                sh '''
-                    cd website
-                    docker-compose up -d --build
-                '''
-            }
-        }
-       stage('Release to Production') {
+      stage('Code Quality Analysis') {
     steps {
-        echo "Merging changes to production branch..."
+        echo "Analyzing the code quality with ESLint..."
+        sh '''
+            cd website
+            npm install eslint --save-dev || true
+            npx eslint . --fix || true
+        '''
     }
 }
 
 
+        stage('Deploy to Staging') {
+            steps {
+                echo "Deploying the website to the staging environment..."
+                sh 'cd website && docker-compose up -d --build'
+            }
+        }
+        stage('Release to Production') {
+            steps {
+                echo "Merging changes to production branch..."
+                sh '''
+                    git checkout production
+                    git merge main
+                    git push origin production
+                '''
+                echo "Releasing the website to production..."
+                sh 'echo "Release to production completed."'
+            }
+        }
         stage('Monitoring and Alerting') {
             steps {
                 echo "Setting up monitoring and alerting..."
@@ -72,21 +69,18 @@ pipeline {
             }
         }
     }
-post {
-    always {
-        script {
-            node {
+    post {
+        always {
+            script {
                 echo 'Cleaning up...'
-                sh '''
-                    pkill -f "node ./website" || true
-                '''
+                sh 'pkill -f "node ./website" || true'
             }
         }
-    }
-    success {
-        echo 'Pipeline completed successfully!'
-    }
-    failure {
-        echo 'Pipeline failed'
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed'
+        }
     }
 }

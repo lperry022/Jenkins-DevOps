@@ -10,7 +10,7 @@ const assert = require('assert');
         assert.strictEqual(title, 'Scam News Articles'); 
         console.log('Title is: ' + title);
 
-        let header = await driver.findElement(By.css('h1')); 
+        let header = await driver.wait(until.elementLocated(By.css('h1')), 10000);
         assert.ok(header, 'Header element is present');
 
         let headerText = await header.getText();

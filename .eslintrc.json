@@ -1,0 +1,19 @@
+{
+  "env": {
+    "node": true,
+    "jest": true,
+    "es6": true
+  },
+  "extends": "eslint:recommended",
+  "rules": {
+    "no-unused-vars": "warn"
+  },
+  "globals": {
+    "__dirname": "readonly",
+    "require": "readonly",
+    "module": "readonly",
+    "describe": "readonly",
+    "test": "readonly",
+    "expect": "readonly"
+  }
+}
