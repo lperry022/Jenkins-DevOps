@@ -1,5 +1,9 @@
 {
   "dependencies": {
     "newrelic": "^12.5.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.11.0",
+    "eslint-plugin-jest": "^28.8.3"
   }
 }
