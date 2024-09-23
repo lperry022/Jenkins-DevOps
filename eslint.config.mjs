@@ -6,6 +6,7 @@ export default [
     languageOptions: {
       globals: {
         ...globals.node,
+        ...globals.browser,
         ...globals.jest,
         __dirname: "readonly",
         require: "readonly",
