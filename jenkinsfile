@@ -80,8 +80,8 @@ pipeline {
         failure {
             echo 'Pipeline failed'
             mail to: "${RECIPIENT_EMAIL}",
-            subject: "Pipeline Status: Failed",
-
+            subject: "Pipeline Status: Failed"
+            body: "Build was unsuccessful"
         }
     }
 }
