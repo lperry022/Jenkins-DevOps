@@ -48,17 +48,20 @@ pipeline {
                 sh 'cd website && docker-compose up -d --build'
             }
         }
-        stage('Release to Production') {
-            steps {
-                echo "Releasing the application to production..."
-                sh '''
-                    cd website
-                    bundle exec cap production deploy:starting
-                    bundle exec cap production deploy
-                    bundle exec cap production deploy:finished
-                '''
-            }
-        }
+       stage('Release to Production') {
+    steps {
+        echo "Releasing the application to production..."
+        sh '''
+            export PATH="$HOME/.rbenv/bin:$PATH"
+            eval "$(rbenv init -)"
+            cd website
+            gem install bundler
+            bundle exec cap production deploy:starting
+            bundle exec cap production deploy
+            bundle exec cap production deploy:finished
+        '''
+    }
+}
         stage('Monitoring and Alerting') {
             steps {
                 echo "Setting up monitoring and alerting..."
