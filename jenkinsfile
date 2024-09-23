@@ -52,7 +52,7 @@ pipeline {
         stage('Release to Production') {
     steps {
         echo "Deploying to production using Docker..."
-        sh 'docker-compose -f docker-compose.prod.yml up -d --build'
+        sh 'cd website && docker-compose up -d --build'
     }
 }
 
