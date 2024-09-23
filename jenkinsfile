@@ -72,9 +72,15 @@ pipeline {
         }
         success {
             echo 'Pipeline completed successfully!'
+            mail to: "lianaperry022@gmail.com",
+            subject: "Pipeline Status: Success",
+            body: "Build was successful"
         }
         failure {
             echo 'Pipeline failed'
+            mail to: "lianaperry022@gmail.com",
+            subject: "Pipeline Status: Failed",
+            body: "Build was unsuccessful"
         }
     }
 }
